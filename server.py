@@ -12,8 +12,12 @@ def root():
 @app.route("/emotionDetector", methods=["GET"])
 def emotion_detector_route():
     text_to_analyze = request.args.get("textToAnalyze")
-    response = emotion_detector(text_to_analyze)
-    return jsonify(response)
+response = emotion_detector(text_to_analyze)
+
+if response.get("dominant_emotion") is None:
+    return "Invalid text! Please try again!."
+
+return jsonify(response)
 
 
 if __name__ == "__main__":
